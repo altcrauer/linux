@@ -17,6 +17,7 @@
 
 /dts-v1/;
 /include/ "socfpga.dtsi"
+/include/ "fpga_video.dtsi"
 
 / {
 	model = "Altera SOCFPGA Cyclone V";
