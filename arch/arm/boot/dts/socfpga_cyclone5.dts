@@ -69,6 +69,165 @@
 			};
 		};
 
+		hps_0_h2f_lw: bridge@0xff200000 {
+			reg = < 0xFF200000 0x00200000 >;
+			#address-cells = < 1 >;
+			#size-cells = < 1 >;
+			ranges = < 0x00010000 0xFF210000 0x00000008 
+				0x00010040 0xFF210040 0x00000020 
+				0x00010080 0xFF210080 0x00000010 
+				0x000100C0 0xFF2100C0 0x00000010 
+				0x00020000 0xFF220000 0x00000008 
+				0x00040100 0xFF240100 0x00000080 
+				0x00000050 0xFF200050 0x00000010 
+				0x00000040 0xFF200040 0x00000010 
+				0x00000030 0xFF200030 0x00000010 
+				0x00060000 0xFF260000 0x00000020 
+				0x00060020 0xFF260020 0x00000010 
+				0x00050000 0xFF250000 0x00000008 
+				0x00070000 0xFF270000 0x00000080 >;
+			compatible = "simple-bus";	/* appended from boardinfo */
+
+			sysid_qsys: sysid@0x10000 {
+				compatible = "ALTR,sysid-13.0", "ALTR,sysid-1.0";
+				reg = < 0x00010000 0x00000008 >;
+				id = < 2899645194 >;	/* embeddedsw.dts.params.id type NUMBER */
+				timestamp = < 1371165749 >;	/* embeddedsw.dts.params.timestamp type NUMBER */
+			}; //end sysid@0x10000 (sysid_qsys)
+
+			led_pio: gpio@0x10040 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x00010040 0x00000020 >;
+				width = < 4 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+			}; //end gpio@0x10040 (led_pio)
+
+			dipsw_pio: gpio@0x10080 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x00010080 0x00000010 >;
+				interrupt-parent = < &intc >;
+				interrupts = < 0 40 1 >;
+				width = < 4 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				edge_type = < 2 >;	/* embeddedsw.dts.params.edge_type type NUMBER */
+				level_trigger = < 0 >;	/* embeddedsw.dts.params.level_trigger type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+			}; //end gpio@0x10080 (dipsw_pio)
+
+			button_pio: gpio@0x100c0 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x000100C0 0x00000010 >;
+				interrupt-parent = < &intc >;
+				interrupts = < 0 41 1 >;
+				width = < 2 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				edge_type = < 1 >;	/* embeddedsw.dts.params.edge_type type NUMBER */
+				level_trigger = < 0 >;	/* embeddedsw.dts.params.level_trigger type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+			}; //end gpio@0x100c0 (button_pio)
+
+			jtag_uart: serial@0x20000 {
+				compatible = "ALTR,juart-13.0.1.99.2", "ALTR,juart-1.0";
+				reg = < 0x00020000 0x00000008 >;
+				interrupt-parent = < &intc >;
+				interrupts = < 0 42 4 >;
+			}; //end serial@0x20000 (jtag_uart)
+
+			alt_vip_vfr_lcd: vip@0x40100 {
+				compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
+				reg = < 0x00040100 0x00000080 >;
+				max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
+				max-height = < 480 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+				bits-per-color = < 8 >;	/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */
+				colors-per-beat = < 3 >;	/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */
+				beats-per-pixel = < 1 >;	/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */
+				mem-word-width = < 32 >;	/* MEM_PORT_WIDTH type NUMBER */
+			}; //end vip@0x40100 (alt_vip_vfr_lcd)
+			
+			//alt_vip_vfr_vga: vip@0x70000 {
+			//	compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
+			//	reg = < 0x00070000 0x00000080 >;
+			//	max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
+			//	max-height = < 600 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+			//	bits-per-color = < 8 >;	/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */
+			//	colors-per-beat = < 3 >;	/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */
+			//	beats-per-pixel = < 1 >;	/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */
+			//	mem-word-width = < 32 >;	/* MEM_PORT_WIDTH type NUMBER */
+			//	status = "disabled";	/* appended from boardinfo */
+			//}; //end vip@0x70000 (alt_vip_vfr_vga)
+
+			lcd_i2c_scl: gpio@0x50 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x00000050 0x00000010 >;
+				width = < 1 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+			}; //end gpio@0x50 (lcd_i2c_scl)
+
+			lcd_i2c_en: gpio@0x40 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x00000040 0x00000010 >;
+				width = < 1 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+			}; //end gpio@0x40 (lcd_i2c_en)
+
+			lcd_i2c_sdat: gpio@0x30 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x00000030 0x00000010 >;
+				width = < 1 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+			}; //end gpio@0x30 (lcd_i2c_sdat)
+
+			touch_panel_spi: spi@0x60000 {
+				compatible = "ALTR,spi-13.0.1.99.2", "ALTR,spi-1.0";
+				reg = < 0x00060000 0x00000020 >;
+				interrupt-parent = < &intc >;
+				interrupts = < 0 44 4 >;
+				#address-cells = < 1 >;	/* appended from boardinfo */
+				#size-cells = < 0 >;	/* appended from boardinfo */
+
+				ts0: ts@0 {
+					compatible = "ti,ads7843";	/* appended from boardinfo */
+					reg = < 0 >;	/* appended from boardinfo */
+					spi-max-frequency = < 31250 >;	/* appended from boardinfo */
+					interrupts = < 0 >;	/* appended from boardinfo */
+					interrupt-parent = < &touch_panel_pen_irq_n >;	/* appended from boardinfo */
+					gpios = < &touch_panel_pen_irq_n 0 1 >;	/* appended from boardinfo */
+				}; //end ts@0 (ts0)
+			}; //end spi@0x60000 (touch_panel_spi)
+
+			touch_panel_pen_irq_n: gpio@0x60020 {
+				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
+				reg = < 0x00060020 0x00000010 >;
+				interrupt-parent = < &intc >;
+				interrupts = < 0 45 1 >;
+				width = < 1 >;	/* width type NUMBER */
+				resetvalue = < 0 >;	/* resetValue type NUMBER */
+				edge_type = < 1 >;	/* embeddedsw.dts.params.edge_type type NUMBER */
+				level_trigger = < 0 >;	/* embeddedsw.dts.params.level_trigger type NUMBER */
+				#gpio-cells = < 2 >;
+				gpio-controller;
+				#interrupt-cells = < 1 >;	/* appended from boardinfo */
+				interrupt-controller;	/* appended from boardinfo */
+			}; //end gpio@0x60020 (touch_panel_pen_irq_n)
+
+			ps2_0: unknown@0x50000 {
+				reg = < 0x00050000 0x00000008 >;
+				interrupt-parent = < &intc >;
+				interrupts = < 0 43 4 >;
+				compatible = "ALTR,ps2-1.0";	/* appended from boardinfo */
+			}; //end unknown@0x50000 (ps2_0)
+		}; //end bridge@0xff200000 (hps_0_bridges_h2f_lw)
+
 		ethernet@ff700000 {
 			status = "disabled";
 		};
