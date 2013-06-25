@@ -24,6 +24,7 @@ struct altfb_dev {
     struct fb_info *info;
     struct resource *reg_res;
     void __iomem *base;
+    int mem_word_width;
     void *priv;
 };
 
@@ -273,8 +274,9 @@ static int of_setup_vipfr(struct altfb_dev *fbdev) {
 		dev_err(&fbdev->pdev->dev, "Missing required parameter 'mem-word-width'");
 		return -ENODEV;
 	}
-	if(be32_to_cpup(val) != 32) {
-		dev_err(&fbdev->pdev->dev, "mem-word-width is set to %i. Curently only 32 is supported.",be32_to_cpup(val));
+	fbdev->mem_word_width = be32_to_cpup(val);
+	if(!(fbdev->mem_word_width >= 32 && fbdev->mem_word_width % 32 == 0)) {
+		dev_err(&fbdev->pdev->dev, "mem-word-width is set to %i. must be >= 32 and multiple of 32.",fbdev->mem_word_width);
 		return -ENODEV;
 	}
 
@@ -282,7 +284,7 @@ static int of_setup_vipfr(struct altfb_dev *fbdev) {
 }
 static int start_vipfr_hw(struct altfb_dev *fbdev) {
     writel(fbdev->info->fix.smem_start, fbdev->base + PB0_BASE_ADDRESSOFFSET);
-    writel(fbdev->info->var.xres * fbdev->info->var.yres, \
+    writel(fbdev->info->var.xres * fbdev->info->var.yres/(fbdev->mem_word_width/32), \
             fbdev->base + PB0_WORDS_ADDRESSOFFSET);
     writel(fbdev->info->var.xres * fbdev->info->var.yres, \
             fbdev->base + PB0_SAMPLES_ADDRESSOFFSET);
