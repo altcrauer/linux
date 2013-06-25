@@ -68,6 +68,25 @@
 				bus-width = <4>;
 			};
 		};
+		
+		hps_0_h2f_lw: bridge@0xff200000 {
+			compatible = "altr,h2f_lw_bridge-1.0", "simple-bus";
+			reg = < 0xFF200000 0x00200000 >;
+			#address-cells = < 1 >;
+			#size-cells = < 1 >;
+			ranges = < 0x00000100 0xFF200100 0x00000080 >;
+			
+			alt_vip_vfr_1: vip@0x100 {
+				compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
+				reg = < 0x00000100 0x00000080 >;
+				max-width = < 1024 >;	/* MAX_IMAGE_WIDTH type NUMBER */
+				max-height = < 768 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+				mem-word-width = < 128 >;
+				bits-per-color = < 8 >;
+				
+			}; //end vip@0x40100 (alt_vip_vfr_0)
+
+		}; //end bridge@0xff200000 (hps_0_h2f_lw)
 
 		ethernet@ff700000 {
 			status = "disabled";
