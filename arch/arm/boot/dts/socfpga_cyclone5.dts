@@ -137,28 +137,27 @@
 				interrupts = < 0 42 4 >;
 			}; //end serial@0x20000 (jtag_uart)
 
-			alt_vip_vfr_lcd: vip@0x40100 {
-				compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
-				reg = < 0x00040100 0x00000080 >;
-				max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
-				max-height = < 480 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
-				bits-per-color = < 8 >;	/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */
-				colors-per-beat = < 3 >;	/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */
-				beats-per-pixel = < 1 >;	/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */
-				mem-word-width = < 32 >;	/* MEM_PORT_WIDTH type NUMBER */
-			}; //end vip@0x40100 (alt_vip_vfr_lcd)
-			
-			//alt_vip_vfr_vga: vip@0x70000 {
+			//alt_vip_vfr_lcd: vip@0x40100 {
 			//	compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
-			//	reg = < 0x00070000 0x00000080 >;
+			//	reg = < 0x00040100 0x00000080 >;
 			//	max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
-			//	max-height = < 600 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+			//	max-height = < 480 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
 			//	bits-per-color = < 8 >;	/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */
 			//	colors-per-beat = < 3 >;	/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */
 			//	beats-per-pixel = < 1 >;	/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */
 			//	mem-word-width = < 32 >;	/* MEM_PORT_WIDTH type NUMBER */
-			//	status = "disabled";	/* appended from boardinfo */
-			//}; //end vip@0x70000 (alt_vip_vfr_vga)
+			//}; //end vip@0x40100 (alt_vip_vfr_lcd)
+			
+			alt_vip_vfr_vga: vip@0x70000 {
+				compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
+				reg = < 0x00070000 0x00000080 >;
+				max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
+				max-height = < 600 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+				bits-per-color = < 8 >;	/* BITS_PER_PIXEL_PER_COLOR_PLANE type NUMBER */
+				colors-per-beat = < 3 >;	/* NUMBER_OF_CHANNELS_IN_PARALLEL type NUMBER */
+				beats-per-pixel = < 1 >;	/* NUMBER_OF_CHANNELS_IN_SEQUENCE type NUMBER */
+				mem-word-width = < 32 >;	/* MEM_PORT_WIDTH type NUMBER */
+			}; //end vip@0x70000 (alt_vip_vfr_vga)
 
 			lcd_i2c_scl: gpio@0x50 {
 				compatible = "ALTR,pio-13.0.1.99.2", "ALTR,pio-1.0", "altr,pio-1.0";
