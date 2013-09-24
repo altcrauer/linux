@@ -16,6 +16,7 @@
  */
 
 /include/ "socfpga_cyclone5.dtsi"
+/include/ "fpga_stuff.dtsi"
 
 / {
 	model = "Terasic SoCkit";
