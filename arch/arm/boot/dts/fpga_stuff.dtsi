@@ -1,0 +1,48 @@
+/*
+ *  Copyright (C) 2012 Altera Corporation <www.altera.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/ {
+	interrupt-parent = <&intc>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	hps_0_bridges_h2f_lw: bridge@0xff200000 {
+		reg = < 0xFF200000 0x00200000 >;
+		#address-cells = < 1 >;
+		#size-cells = < 1 >;
+		compatible = "simple-bus";	/* appended from boardinfo */
+			ranges = <
+				0x00000200 0xFF200200 0x00000080 
+				0x00000100 0xFF200100 0x00000080 >;
+
+			terasic_mtl_touch: tsc@0x200 {
+				compatible = "terasic,mlt_touch_screen";
+				reg = < 0x00000200 0x00000080 >;
+				width_pixel = < 800 >;  
+				height_pixel = < 480 >;
+				interrupts = <0 40 4>;
+			}; //end tsc@0x0200
+			alt_vip_vfr_1: vip@0x100 {
+				compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
+				reg = < 0x00000100 0x00000080 >;
+				max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
+				max-height = < 480 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+				mem-word-width = < 256 >;
+				bits-per-color = < 8 >;
+			}; //end vip@0x40100 (alt_vip_vfr_0)
+	}; //end bridge@0xff200000 (hps_0_bridges_h2f_lw)
+};
