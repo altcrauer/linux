@@ -1,0 +1,59 @@
+/*
+ *  Copyright (C) 2012 Altera Corporation <www.altera.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	hps_0_bridges: bridge@0xff200000 {
+		compatible = "simple-bus";
+		#address-cells = < 1 >;
+		#size-cells = < 1 >;
+		ranges;
+
+		/*alt_vip_vfr_0: vip@0xff260000 {
+			compatible = "altr,vip-frame-reader-9.1";
+			reg = <0xff260000 0x00000080>;
+			max-width = <1024>;
+			max-height = <768>;
+			bits-per-color = <8>;
+			mem-word-width = <128>;
+		};*/
+		
+		alt_vip_vfr_vga: vip@0xff270000 {
+				compatible = "ALTR,vip-frame-reader-1.0";
+				reg = < 0xff270000 0x00000080 >;
+				max-width = < 800 >;	
+				max-height = < 600 >;	
+				bits-per-color = < 8 >;	
+				colors-per-beat = < 4 >;
+				beats-per-pixel = < 1 >;
+				mem-word-width = < 128 >;
+			}; //end vip@0xff270000 (alt_vip_vfr_vga)
+			
+			alt_vip_vfr_lcd: vip@0xff240100 {
+				compatible = "ALTR,vip-frame-reader-9.1";
+				reg = < 0xff240100 0x00000080 >;
+				max-width = < 800 >;	
+				max-height = < 480 >;	
+				bits-per-color = < 8 >;	
+				colors-per-beat = < 4 >;
+				beats-per-pixel = < 1 >;
+				mem-word-width = < 128 >;
+			}; //end vip@0xff240100 (alt_vip_vfr_lcd)
+	}; //end bridge@0xc0000000 (hps_0_bridges)
+};
