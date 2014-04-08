@@ -705,7 +705,7 @@
 			tx-dma-channel = <&pdma 16>;
 			rx-dma-channel = <&pdma 17>;
 			clocks = <&per_base_clk>;
-
+			status = "disabled";
 			spidev@0 {
 				compatible = "spidev";
 				reg = <0>;	/* chip select */
@@ -725,7 +725,7 @@
 			tx-dma-channel = <&pdma 20>;
 			rx-dma-channel = <&pdma 21>;
 			clocks = <&per_base_clk>;
-			status = "disabled";
+			
 
 			spidev@0 {
 				compatible = "spidev";
