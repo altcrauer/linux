@@ -64,12 +64,40 @@
 				bus-width = <4>;
 			};
 		};
+		hps_0_h2f_lw: bridge@0xff200000 {
+			compatible = "altr,h2f_lw_bridge-1.0", "simple-bus";
+			reg = < 0xFF200000 0x00200000 >;
+		 	#address-cells = < 1 >;
+		 	#size-cells = < 1 >;
+		 	ranges = <
+				0x00000200 0xFF200200 0x00000080 
+				0x00000100 0xFF200100 0x00000080 >;
+			 terasic_mtl_touch: tsc@0x200 {
+				compatible = "terasic,mlt_touch_screen";
+				reg = < 0x00000200 0x00000080 >;
+				width_pixel = < 800 >;	
+				height_pixel = < 480 >;
+				interrupts = <0 40 4>;
+			}; //end tsc@0x0200 		
+		 	alt_vip_vfr_1: vip2@0x100 {
+		 		compatible = "ALTR,vip-frame-reader-13.0", "ALTR,vip-frame-reader-9.1";
+		 		reg = < 0x00000100 0x00000080 >;
+		 		max-width = < 800 >;	/* MAX_IMAGE_WIDTH type NUMBER */
+		 		max-height = < 480 >;	/* MAX_IMAGE_HEIGHT type NUMBER */
+		 		mem-word-width = < 256 >;
+		 		bits-per-color = < 8 >;			
+		 	}; //end vip@0x40100 (alt_vip_vfr_0)
 
+		}; //end bridge@0xff200000 (hps_0_h2f_lw)
 		i2c0: i2c@ffc04000 {
 			speed-mode = <0>;
 			status = "okay";
 		};
-
+	
+		i2c1: i2c@ffc05000 {
+			speed-mode = <0>;
+			status = "okay";
+		};
 		qspi: spi@ff705000 {
 			compatible = "cadence,qspi";
                         #address-cells = <1>;
@@ -127,51 +155,9 @@
 			status = "okay";
 		};
 
-		leds {
-			compatible = "gpio-leds";
-			hps0 {
-				label = "hps_led0";
-				gpios = <&gpio1 15 1>;
-			};
-
-			hps1 {
-				label = "hps_led1";
-				gpios = <&gpio1 14 1>;
-			};
-
-			hps2 {
-				label = "hps_led2";
-				gpios = <&gpio1 13 1>;
-			};
-
-			hps3 {
-				label = "hps_led3";
-				gpios = <&gpio1 12 1>;
-			};
-		};
 	};
 };
 
-&i2c0 {
-	lcd: lcd@28 {
-		compatible = "newhaven,nhd-0216k3z-nsw-bbw";
-		reg = <0x28>;
-		height = <2>;
-		width = <16>;
-		brightness = <8>;
-	};
-
-	eeprom@51 {
-		compatible = "atmel,24c32";
-		reg = <0x51>;
-		pagesize = <32>;
-	};
-
-	rtc@68 {
-		compatible = "dallas,ds1339";
-		reg = <0x68>;
-	};
-};
 
 &gmac1 {
 	phy-mode = "rgmii";
