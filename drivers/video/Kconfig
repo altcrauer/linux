@@ -200,6 +200,15 @@ config FB_DEFERRED_IO
 	bool
 	depends on FB
 
+config  FB_DE1_SOC
+	tristate "Altera framebuffer support"
+	depends on FB 
+	select FB_CFB_FILLRECT
+	select FB_CFB_COPYAREA
+	select FB_CFB_IMAGEBLIT
+	help
+	  This is the frame buffer driver for the VGA controller
+
 config FB_HECUBA
 	tristate
 	depends on FB
