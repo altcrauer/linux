@@ -62,6 +62,17 @@ struct altera_spi {
 	unsigned char *rx;
 };
 
+static int altera_spi_setupxfer(struct spi_device *spi, struct spi_transfer *t)
+{
+       return 0;
+}
+
+static int altera_spi_setup(struct spi_device *spi)
+{
+       return 0;
+}
+
+
 static inline struct altera_spi *altera_spi_to_hw(struct spi_device *sdev)
 {
 	return spi_master_get_devdata(sdev->master);
@@ -214,6 +225,7 @@ static int altera_spi_probe(struct platform_device *pdev)
 	master->bus_num = pdev->id;
 	master->num_chipselect = 16;
 	master->mode_bits = SPI_CS_HIGH;
+	master->setup = altera_spi_setup;
 
 	hw = spi_master_get_devdata(master);
 	platform_set_drvdata(pdev, hw);
@@ -222,6 +234,7 @@ static int altera_spi_probe(struct platform_device *pdev)
 	hw->bitbang.master = master;
 	if (!hw->bitbang.master)
 		return err;
+	hw->bitbang.setup_transfer = altera_spi_setupxfer;
 	hw->bitbang.chipselect = altera_spi_chipsel;
 	hw->bitbang.txrx_bufs = altera_spi_txrx;
 
