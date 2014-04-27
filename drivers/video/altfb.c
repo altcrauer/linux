@@ -225,8 +225,6 @@ static int start_sgdma_hw(struct altfb_dev *fbdev) {
  *  Initialization - VIPFrameReader Based
  */
 
-
-
 #define PACKET_BANK_ADDRESSOFFSET 12
 #define PB0_BASE_ADDRESSOFFSET 16
 #define PB0_WORDS_ADDRESSOFFSET 20
@@ -284,28 +282,7 @@ static int of_setup_vipfr(struct altfb_dev *fbdev) {
 
 	return 0;
 }
-#define SDRREGS_BASE        0xFF200000
-#define SDRREGS_EXTENT      0x000E0000
-#define FPGA2SDRAM_ADDR     0x00005080
-#define FPGA2SDRAM_TRUE     0x00003FFF 
-
-#define H2F_LW_AXI          0xFF200000
-#define VIP_MIXER           0x00000000
-#define MIXER_LAYER1_STREG     16
-#define MIXER_LAYER2_XREG      20
-#define MIXER_LAYER2_XREG      24
-#define MIXER_LAYER2_STREG     28
-#define VIP_MIXER_EXTENT    0x00000100
-#define VIP_MIXER_START     0x00000001
-
-
-static int start_vipfr_hw(struct altfb_dev *fbdev) {	
-    unsigned long base;
-    base = (unsigned long)ioremap(H2F_LW_AXI, VIP_MIXER_EXTENT);
-    writel(VIP_MIXER_START, base);
-    writel(0x01,MIXER_LAYER1_STREG+base);
-    writel(0x01,MIXER_LAYER2_STREG+base);
-
+static int start_vipfr_hw(struct altfb_dev *fbdev) {
     writel(fbdev->info->fix.smem_start, fbdev->base + PB0_BASE_ADDRESSOFFSET);
     writel(fbdev->info->var.xres * fbdev->info->var.yres/(fbdev->mem_word_width/32), \
             fbdev->base + PB0_WORDS_ADDRESSOFFSET);
@@ -377,7 +354,7 @@ static int altfb_probe(struct platform_device *pdev)
 	info->fix = altfb_fix;
 
     if(fbdev->type->of_setup(fbdev))
-       goto err1;
+        goto err1;
 
 	if(info->var.bits_per_pixel == 16) {
 		info->var.red.offset = 11;
@@ -408,7 +385,6 @@ static int altfb_probe(struct platform_device *pdev)
 					info->fix.smem_len,
 					(void *)&(info->fix.smem_start),
 					GFP_KERNEL);
-	//__get_free_pages(GFP_KERNEL,10);
 	if (!fbmem_virt) {
 		dev_err(&pdev->dev, "altfb: unable to allocate %ld Bytes fb memory\n",
 			info->fix.smem_len + DISPLAY_DESC_SIZE(info->fix.smem_len));
